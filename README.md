@@ -1,6 +1,6 @@
 # Kiwi — Prueba técnica: Rewards → Withdraw
 
-1) Descripción
+Descripción
 ----------------
 Este repositorio implementa, en formato de demo técnica, el flujo "Rewards → Withdraw → Success" definido en el Figma de la prueba. Su objetivo es demostrar criterio técnico, decisiones justificadas y cobertura de pruebas; no es una solución productiva.
 
@@ -10,12 +10,12 @@ Qué problema resuelve
 Qué NO intenta resolver
 - Integración con pasarelas de pago reales, persistencia en base de datos en producción, ni control de acceso completo.
 
-2) Alcance
+Alcance
 ----------------
 - Pantallas implementadas: Balance/Historial (Rewards), Select Method, Select Account, Withdraw Confirm, Withdraw Success.
 - La interfaz y el comportamiento se han alineado con el diseño de Figma dentro de las limitaciones de la demo (sin integración externa).
 
-3) Stack técnico
+Stack técnico
 ----------------
 - Frontend: React + Vite, JavaScript, CSS
 - Backend: Node.js + Express (datos en memoria)
@@ -23,7 +23,7 @@ Qué NO intenta resolver
 - Pruebas: Vitest (unit), Playwright (E2E)
 - Herramientas: Spec‑Kit (workflow de especificación), Copilot como asistente de productividad
 
-4) Decisiones técnicas (resumen)
+Decisiones técnicas (resumen)
 ----------------
 - Enfoque minimalista y reproducible: datos en memoria para mantener determinismo en pruebas y foco en el flujo.
 - Montos representados en centavos (`amountCents`) y procesados por utilidades centralizadas (`client/src/utils/amount.js`) para evitar errores de precisión.
@@ -31,13 +31,13 @@ Qué NO intenta resolver
 - Pruebas: unitarias para utilidades críticas y E2E para validar la experiencia completa.
 - No se sobreingenierizó: no se añadieron bases de datos, colas o integraciones innecesarias que no aportan al objetivo de la prueba.
 
-5) Uso de Spec‑Kit
+Uso de Spec‑Kit
 ----------------
 - Analyze: recopilación de ambigüedades y definición de criterios de aceptación.
 - Plan/Constitution: establecimiento de límites de alcance (sin integraciones externas).
 - Specify/Tasks: descomposición del trabajo en tareas pequeñas y priorizadas (API, utilidades, pruebas, UI).
 
-6) Cómo ejecutar (comandos exactos)
+Cómo ejecutar
 ----------------
 Prerequisitos: Node.js v16+ y npm
 
@@ -94,7 +94,7 @@ cd client
 npm run test:all
 ```
 
-7) Backend / API
+Backend / API
 ----------------
 Endpoints implementados (resumen):
 - `GET /rewards` — devuelve `{ balanceCents, currency, history }`
@@ -106,13 +106,13 @@ Endpoints implementados (resumen):
 
 Swagger UI disponible en `/docs` cuando el servidor esté en ejecución.
 
-8) Supuestos y limitaciones
+Supuestos y limitaciones
 ----------------
 - Datos en memoria para facilitar pruebas deterministas.
 - No hay autenticación/autorization en las rutas (fuera de alcance para la prueba).
 - No se integró con servicios externos (bancos, pasarelas de pago).
 
-9) Posibles mejoras (priorizadas)
+Posibles mejoras (priorizadas)
 ----------------
 - Añadir persistencia (Postgres/SQLite) y migraciones.
 - Añadir autenticación y permisos para rutas sensibles.
@@ -120,12 +120,9 @@ Swagger UI disponible en `/docs` cuando el servidor esté en ejecución.
 - Añadir pruebas visuales (snapshots) para detectar regresiones de UI.
 - Dockerizar la aplicación para reproducibilidad en CI y local.
 
-Contribución y mantenimiento
+Mantenimiento
 ----------------
 - Mantener la lógica del negocio separada de la UI y cubrir utilidades críticas con unit tests.
 - Usar ramas `feature/*` y PRs para cambios; los PRs deben incluir pasos para reproducir localmente y pruebas que cubran lo modificado.
 
-Contacto / próximos pasos
-----------------
-Si deseas que deje el repositorio limpio con solo la rama `main` y que configure CI básico que ejecute las pruebas, indícalo y procedo.
 
