@@ -1,164 +1,165 @@
-# kiwi-challenge — README
+# kiwi-challenge — README (Español)
 
-**Status:** Demo-ready. Frontend (Vite + React) and Backend (Express) running locally, unit and E2E tests included.
+**Estado:** Demo lista para presentación. Frontend (Vite + React) y Backend (Express) ejecutables localmente; incluye pruebas unitarias y E2E.
 
-This README explains how to run the project, run tests, reset demo data, and prepare the repository for delivery.
+Este README explica cómo instalar, ejecutar el proyecto, ejecutar las pruebas automatizadas, restaurar los datos de demostración y preparar el repositorio para entrega.
 
-**Paths:**
-- Server: [server](server)
-- Client: [client](client)
+**Rutas principales:**
+- Servidor: [server](server)
+- Cliente: [client](client)
 
-**Quick summary of what's been added**
-- OpenAPI 3.0 spec: `server/openapi.json` (served at `/docs`).
-- JSON Schema validation using AJV in `server/index.js`.
-- `POST /reset` endpoint to restore in-memory data to defaults (uses `server/data.default.js`).
-- Centralized money utilities and unit tests (`client/src/utils/amount.*`).
-- Playwright E2E tests (seeded and UI-driven) in `client/tests/e2e/`.
-- Responsive styles and minor UI polish in `client/src/styles.css`.
-- Helper: `PREPARE_GIT.md` with steps to commit/push and create a ZIP for delivery.
+**Resumen rápido de lo añadido**
+- Especificación OpenAPI 3.0: `server/openapi.json` (disponible en `/docs`).
+- Validación de solicitudes con JSON Schema (AJV) en `server/index.js`.
+- Endpoint `POST /reset` para restaurar los datos en memoria a los valores por defecto (`server/data.default.js`).
+- Utilidades centralizadas para dinero y tests unitarios en `client/src/utils/amount.*`.
+- Pruebas E2E con Playwright (flujo seed y flujo UI) en `client/tests/e2e/`.
+- Estilos responsivos y ajustes visuales en `client/src/styles.css`.
+- Documento auxiliar `PREPARE_GIT.md` con pasos para preparar commit/push y crear un ZIP de entrega.
 
-**Prerequisites**
-- Node.js (v16+) and npm installed.
-- Recommended: PowerShell on Windows (commands below assume PowerShell).
+**Prerequisitos**
+- Node.js (v16+) y npm instalados.
+- Recomendado en Windows: PowerShell (los comandos de ejemplo usan PowerShell).
 
-## Setup (one-time)
-1. Install server dependencies:
+## Instalación (una sola vez)
+1. Instalar dependencias del servidor:
 
 ```powershell
 cd server
 npm install
 ```
 
-2. Install client dependencies:
+2. Instalar dependencias del cliente:
 
 ```powershell
 cd ../client
 npm install
-# If you plan to run Playwright tests and browsers are not installed:
+# Si vas a ejecutar las pruebas E2E y no tienes navegadores instalados:
 npx playwright install --with-deps
 ```
 
-## Run locally (development)
+## Ejecutar localmente (desarrollo)
 
-1) Start the server (port 3333):
+1) Iniciar el servidor (puerto 3333):
 
 ```powershell
 cd server
 npm start
 ```
 
-2) Start the client dev server (Vite). If `5173` is busy Vite will pick the next port (e.g. `5174`):
+2) Iniciar el servidor de desarrollo del cliente (Vite). Si el puerto `5173` está en uso, Vite elegirá el siguiente (por ejemplo `5174`):
 
 ```powershell
 cd client
 npm run dev
 ```
 
-3) Open the app in browser (example):
+3) Abrir la aplicación en el navegador (ejemplos):
 
-- Frontend: http://localhost:5173/ (if Vite chose another port, use that one)
-- Swagger UI (API docs): http://localhost:3333/docs
+- Frontend: http://localhost:5173/ (si Vite eligió otro puerto, usar ese puerto)
+- Swagger UI (documentación API): http://localhost:3333/docs
 
-Tip: If Vite chooses a different port, Playwright config uses `client/playwright.config.js` which is currently set to the port observed during development. You can update `baseURL` there if needed.
+Consejo: si Vite elige un puerto distinto, actualiza `client/playwright.config.js` `baseURL` para que las pruebas E2E apunten al puerto correcto.
 
-## Reset demo data (restore default transactions)
+## Restaurar datos de demostración
 
-To clear runtime transactions and restore the monthly demo history, call the reset endpoint:
+Para borrar las transacciones en memoria y restaurar el historial mensual incluido en los datos por defecto, llama al endpoint `/reset`:
 
 ```powershell
-# from any terminal
+# desde cualquier terminal
 Invoke-RestMethod -Method Post -Uri http://localhost:3333/reset
-# or with curl
+# o con curl
 curl -X POST http://localhost:3333/reset
 ```
 
-After reset, check the rewards endpoint:
+Después, puedes comprobar el endpoint de rewards:
 
 ```powershell
 curl http://localhost:3333/rewards
 ```
 
-## Tests
+## Pruebas
 
-Unit tests (Vitest):
+Pruebas unitarias (Vitest):
 
 ```powershell
 cd client
 npm run test
 ```
 
-E2E tests (Playwright): ensure server + client are running, then:
+Pruebas E2E (Playwright): asegúrate de que el servidor y el cliente estén ejecutándose, luego:
 
 ```powershell
 cd client
 npm run test:e2e
 ```
 
-Run both sequentially:
+Ejecutar ambas secuencias (unit + e2e):
 
 ```powershell
 cd client
 npm run test:all
 ```
 
-Notes:
-- Playwright includes two E2E tests: a seeded flow (uses `localStorage`) and a UI-driven flow (no `localStorage`).
-- If Playwright reports a different dev server port, update `client/playwright.config.js` `baseURL` to match the port printed by Vite.
+Notas:
+- Hay dos pruebas E2E: una usa `localStorage` para preparar estado (seeded) y otra realiza todo el flujo mediante interacciones UI (sin seed).
+- Si Playwright informa un puerto distinto para Vite, actualiza `client/playwright.config.js` `baseURL`.
 
-## Scripts (summary)
+## Scripts útiles
 
-- `cd server && npm start` — start backend on port 3333
-- `cd client && npm run dev` — start frontend (Vite)
-- `cd client && npm run test` — run unit tests (Vitest)
-- `cd client && npm run test:e2e` — run Playwright E2E
-- `cd client && npm run test:all` — run unit + e2e
+- `cd server && npm start` — inicia el backend en el puerto 3333
+- `cd client && npm run dev` — inicia el frontend (Vite)
+- `cd client && npm run test` — ejecuta las pruebas unitarias (Vitest)
+- `cd client && npm run test:e2e` — ejecuta las pruebas E2E (Playwright)
+- `cd client && npm run test:all` — ejecuta unit + e2e
 
-## Important files changed / added (overview)
+## Archivos importantes añadidos / cambiados
 
-- `server/openapi.json` — OpenAPI 3.0 spec (schemas + examples)
-- `server/data.default.js` — default seeded data used by `POST /reset`
-- `server/index.js` — added `POST /reset`, AJV validation
-- `client/src/utils/amount.js` (+tests) — money helpers
-- `client/tests/e2e/*` — Playwright tests (seeded + UI-driven)
-- `client/src/styles.css` — responsive adjustments and visual polish
-- `INTERVIEW.md` — summary of work and talking points
-- `PREPARE_GIT.md` — helper to prepare commits and delivery ZIP
+- `server/openapi.json` — especificación OpenAPI 3.0 (esquemas y ejemplos)
+- `server/data.default.js` — datos por defecto usados por `POST /reset`
+- `server/index.js` — añadido `POST /reset` y validación con AJV
+- `client/src/utils/amount.js` (+ pruebas) — utilidades para manejo/formateo de dinero
+- `client/tests/e2e/*` — pruebas Playwright (seeded y UI-driven)
+- `client/src/styles.css` — ajustes responsivos y visuales
+- `INTERVIEW.md` — resumen del trabajo y puntos para presentar
+- `PREPARE_GIT.md` — pasos para preparar commits y exportar ZIP de entrega
 
-## Troubleshooting
+## Resolución de problemas (rápido)
 
-- Port in use (server 3333 or Vite 5173): stop node processes and restart.
+- Puerto en uso (servidor 3333 o Vite 5173): detener procesos node y volver a iniciar.
 
 ```powershell
-# list node processes
+# listar procesos node
 tasklist /FI "IMAGENAME eq node.exe" /FO TABLE
-# kill process
+# terminar proceso por PID
 taskkill /PID <pid> /F
 ```
 
-- If Playwright cannot connect to dev server, confirm Vite's port and update `client/playwright.config.js` `baseURL` accordingly.
+- Si Playwright no puede conectarse, confirma el puerto que Vite imprimió en la terminal y actualiza `client/playwright.config.js` `baseURL`.
 
-## Delivery / Commit
+## Entrega / Commits
 
-When ready to deliver, follow `PREPARE_GIT.md`. Quick steps:
+Pasos rápidos para revisar, commitear y subir:
 
 ```powershell
-# review and stage
+# revisar cambios
 git status
+# seleccionar cambios
 git add -p
 # commit
-git commit -m "chore: polish UI, add E2E tests, OpenAPI and reset endpoint"
+git commit -m "chore: pulido UI, añadir E2E, OpenAPI y endpoint reset"
 # push
 git push origin <branch>
 ```
 
-If you prefer, I can create the commit and push for you — tell me the branch name and commit message.
+He creado la rama `deliver/kiwi-challenge` y empujé los cambios a `main` en el remoto indicado. Si quieres, abro un Pull Request desde `deliver/kiwi-challenge` hacia `main`.
 
-## Next recommendations
+## Recomendaciones siguientes
 
-- Add CI pipeline to run `npm run test` and `npx playwright test` on push.
-- Add visual snapshots in Playwright for regression detection.
-- Optionally swap `Inter` to the exact font used in Figma (SF Pro) if you have licensing.
+- Añadir pipeline CI que ejecute `npm run test` y `npx playwright test` en cada push.
+- Añadir snapshots visuales en Playwright para detectar regresiones visuales.
+- Opcional: usar la tipografía exacta del Figma (SF Pro) si tienes la licencia.
 
 ---
 
-If you want, I can now: create the git commit and push to `main`, or push to a feature branch. Which do you prefer? 
+¿Quieres que abra un Pull Request desde `deliver/kiwi-challenge` hacia `main` ahora? 
