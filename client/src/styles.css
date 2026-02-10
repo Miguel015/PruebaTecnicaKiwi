@@ -1,0 +1,219 @@
+h2{margin:0 0 12px}
+:root{
+  --pad-lateral:16px;
+  --bg:#FFFFFF;
+  --blue:#043960; /* azul oscuro usado en títulos */
+  --primary:#33CAFF; /* color primario */
+  --text:#0F172A;
+  --text-secondary:#64748B;
+  --label-gray:#94A3B8;
+  --card-border:#E2E8F0;
+  --icon-bg:#EEF3F7;
+  --green:#16A34A;
+}
+body{font-family:'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;margin:0;padding:0;background:var(--bg);color:var(--text)}
+.container{max-width:720px;margin:0 auto;padding:14px;box-sizing:border-box}
+/* App header */
+.app-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;margin:-6px -6px 12px;border-radius:12px;background:linear-gradient(90deg,#f6fffb,#e8fff7);box-shadow:0 8px 30px rgba(3,31,22,0.04)}
+.app-brand{display:flex;align-items:center;gap:12px}
+.app-logo{width:48px;height:48px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:transparent}
+.app-logo-img{width:40px;height:40px;display:block;object-fit:contain;border-radius:6px}
+.app-title{font-size:18px;font-weight:800;color:var(--blue);line-height:20px}
+.app-subtitle{font-size:12px;color:var(--text-secondary);margin-top:2px}
+.app-nav a{color:var(--text-secondary);text-decoration:none;padding:8px;border-radius:8px}
+.app-nav a:hover{background:rgba(4,57,96,0.04);color:var(--blue)}
+/* Header actions (compact right-side buttons) */
+.app-actions{display:flex;align-items:center;gap:8px}
+.header-action{background:transparent;border:0;padding:8px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--blue)}
+.header-action:hover{background:rgba(4,57,96,0.04)}
+.header-action svg{display:block}
+h2{margin:0 0 16px;font-size:26px;font-weight:700;line-height:32px;color:var(--text);font-family:'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif}
+h3{margin-top:0}
+/* Monto styles per Figma */
+.balance{font-size:36px;font-weight:800;margin:8px 0;color:var(--blue);line-height:40px;font-family:'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif}
+button{padding:8px 12px;border-radius:6px;border:0;background:#fff;cursor:pointer}
+.primary{background:var(--blue);color:#FFFFFF;font-size:13px;font-weight:600;height:34px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center}
+.muted{color:var(--label-gray);font-size:14px;line-height:20px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;font-weight:500}
+.muted-2{color:var(--text-secondary);font-size:15px;line-height:20px;font-weight:500}
+.list-item{padding:10px 0}
+.field{margin:8px 0}
+.input{padding:8px;border:1px solid var(--card-border);border-radius:8px;width:200px}
+.error{color:#c53030;margin-top:6px}
+
+.card{border:1px solid var(--card-border);border-radius:16px;padding:16px;background:#fff;display:flex;justify-content:space-between;align-items:center}
+.card .left{display:flex;flex-direction:column}
+.card .label{color:var(--label-gray);font-size:14px;line-height:20px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;font-weight:500}
+.card .value{font-size:36px;font-weight:800;color:var(--blue);line-height:40px;font-family:'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif}
+/* Ensure value sizing is consistent across screens */
+.value{font-size:36px;font-weight:800;color:var(--blue);line-height:40px;font-family:'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif}
+
+/* Inline edit amount (pencil) */
+.edit-icon{background:transparent;border:0;padding:6px;border-radius:8px;cursor:pointer;color:var(--primary);display:inline-flex;align-items:center;justify-content:center}
+.edit-icon:hover{background:rgba(51,202,255,0.06)}
+.edit-amount-input{font-size:20px;font-weight:700;color:var(--blue);outline:none}
+
+/* Ensure inputs inside modals fit and don't overflow */
+.modal-card .edit-amount-input{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid var(--card-border);font-size:18px}
+
+/* floating reload action */
+.float-reload{position:fixed;right:18px;bottom:92px;width:48px;height:48px;border-radius:24px;background:var(--primary);display:inline-flex;align-items:center;justify-content:center;color:#fff;border:0;box-shadow:0 8px 18px rgba(51,202,255,0.18);cursor:pointer}
+.float-reload{position:fixed;right:18px;bottom:92px;width:52px;height:52px;border-radius:26px;background:linear-gradient(135deg,var(--primary),#1fb6ff);display:inline-flex;align-items:center;justify-content:center;color:#fff;border:0;box-shadow:0 12px 30px rgba(51,202,255,0.18);cursor:pointer;transition:transform 220ms cubic-bezier(.2,.9,.2,1),box-shadow 220ms,opacity 180ms}
+.float-reload svg{transition:transform 420ms cubic-bezier(.2,.9,.2,1)}
+.float-reload:hover{transform:translateY(-6px) scale(1.06);box-shadow:0 18px 42px rgba(51,202,255,0.22)}
+.float-reload:active{transform:translateY(-2px) scale(0.98)}
+.float-reload.open svg{transform:rotate(200deg) scale(1.02)}
+.modal-backdrop{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:60;animation:fadeInBackdrop 200ms ease}
+.modal-card{background:#fff;border-radius:12px;padding:14px;max-width:380px;width:92%;box-shadow:0 12px 40px rgba(2,6,23,0.2);animation:popInModal 260ms cubic-bezier(.2,.9,.2,1);transform-origin:center}
+.card .cta{margin-left:12px}
+.method-card, .account-card{border:1px solid var(--card-border);border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center;background:#fff}
+.method-card + .method-card, .account-card + .account-card{margin-top:12px}
+.selected{border-color:var(--primary);box-shadow:0 10px 30px rgba(51,202,255,0.12)}
+.chevron{color:#9ca3af;font-size:20px}
+.chevron{display:flex;align-items:center}
+.chev{transition:transform 220ms cubic-bezier(.2,.9,.2,1);opacity:0.9}
+.chev{color:var(--text-secondary)}
+.method-card{transition:transform 200ms ease, box-shadow 200ms ease}
+.method-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(4,57,96,0.06)}
+.method-card:hover .chev{transform:translateX(6px) rotate(6deg);opacity:1}
+.account-card{transition:transform 180ms ease, box-shadow 180ms ease}
+.account-card:hover{transform:translateY(-4px);box-shadow:0 8px 22px rgba(4,57,96,0.05)}
+.account-card:hover .chev{transform:translateX(6px);opacity:1}
+.content{padding-bottom:110px}
+.footer-cta{position:fixed;left:0;right:0;bottom:16px;display:flex;justify-content:center}
+.footer-inner{width:100%;max-width:720px;padding:12px;background:transparent}
+.footer-button{width:100%;padding:20px 16px;border-radius:999px;border:0;background:var(--primary);color:#FFFFFF;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.footer-button:disabled{background:#cbd5df;color:#7b8b95;cursor:not-allowed;transform:none;box-shadow:none}
+.footer-button:enabled{box-shadow:0 8px 20px rgba(51,202,255,0.18);transition:transform 180ms cubic-bezier(.2,.9,.2,1),box-shadow 180ms}
+.footer-button:enabled:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(51,202,255,0.22)}
+.footer-button:active{transform:translateY(-2px) scale(0.996)}
+.note{border:1px solid var(--card-border);padding:10px;border-radius:8px;background:#fff;margin-bottom:12px}
+
+.back-btn{background:transparent;border:0;padding:6px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;width:36px;height:36px;color:#334155;margin-bottom:12px;cursor:pointer;transition:transform 180ms cubic-bezier(.2,.9,.2,1),opacity 180ms}
+.back-btn:hover{transform:translateX(-6px) scale(1.06);opacity:0.95}
+.back-btn:active{transform:translateX(-2px) scale(0.98)}
+.back-btn svg{color:currentColor}
+.note{display:block}
+.note .muted{display:flex;align-items:center;gap:12px}
+.note .note-icon{flex:0 0 auto;color:var(--primary)}
+.note .muted strong{font-weight:700;color:var(--text)}
+
+.note .note-icon{flex:0 0 auto}
+.note .muted strong{font-weight:700;color:var(--text)}
+
+/* Transaction list specific */
+.month-title{color:var(--text-secondary);margin-top:24px;margin-bottom:16px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif;font-size:15px;line-height:20px}
+.tx-item{display:flex;align-items:center;margin-bottom:16px}
+.tx-item:hover .tx-icon{transform:translateY(-4px);box-shadow:0 8px 20px rgba(4,57,96,0.06)}
+.tx-icon{width:44px;height:44px;border-radius:10px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center;margin-right:14px;color:var(--primary)}
+.tx-body{flex:1}
+.tx-title{color:var(--text);font-weight:600;font-size:15px;line-height:24px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",sans-serif}
+.tx-date{color:var(--text-secondary);font-size:13px;line-height:20px;font-weight:500}
+.tx-amount{min-width:72px;text-align:right;font-weight:700;color:var(--text)}
+.tx-amount.in{color:var(--green)}
+.tx-amount.out{color:#ef4444}
+
+/* Icon visuals + micro-interactions */
+.icon-svg{display:block;color:inherit;transition:transform 220ms cubic-bezier(.2,.9,.2,1),opacity 220ms;stroke-width:1.6}
+.tx-icon{transition:box-shadow 180ms, transform 180ms}
+.tx-icon:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(4,57,96,0.06)}
+.tx-icon:hover .icon-svg{transform:translateX(4px) rotate(6deg) scale(1.06)}
+
+/* subtle entry animation for the list */
+@keyframes popIn { from { transform: translateY(6px) scale(.98); opacity: 0 } to { transform: translateY(0) scale(1); opacity: 1 } }
+.tx-item{display:flex;align-items:center;margin-bottom:16px;animation:popIn 260ms ease-out both}
+
+/* Modal/backdrop animations */
+@keyframes fadeInBackdrop { from { opacity: 0 } to { opacity: 1 } }
+@keyframes popInModal { from { transform: translateY(8px) scale(.98); opacity: 0 } to { transform: translateY(0) scale(1); opacity: 1 } }
+
+/* Slight lift for cards and subtle transitions */
+.method-card, .account-card, .card { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms }
+.method-card:hover, .account-card:hover, .card:hover{transform:translateY(-6px)}
+
+/* Improve modal action button micro-interactions */
+.modal-actions .btn{transition:transform 140ms ease, box-shadow 140ms ease}
+.modal-actions .btn:active{transform:translateY(1px) scale(0.995)}
+
+/* Withdraw success screen */
+.success-wrap{padding:28px 20px 120px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.success-illustration{margin-top:28px;margin-bottom:14px}
+.success-bg{max-width:220px;width:90%;height:auto}
+.success-title{font-size:22px;margin-top:18px;margin-bottom:10px;font-weight:800;color:var(--blue)}
+.success-desc{max-width:320px;color:var(--text-secondary);line-height:24px;margin-bottom:8px}
+.success-note{width:100%;max-width:520px}
+
+/* Responsive: mobile adjustments */
+@media (max-width: 480px) {
+  :root{ --pad-lateral:12px }
+  .container{padding:12px}
+  .app-title{font-size:16px}
+  .balance{font-size:28px}
+  .card, .method-card, .account-card{padding:12px}
+  .card .value, .value{font-size:28px;line-height:32px}
+  .method-card, .account-card{border-radius:12px}
+  .tx-icon{width:36px;height:36px;border-radius:8px;margin-right:10px}
+  .tx-title{font-size:14px}
+  .tx-date{font-size:12px}
+  .tx-amount{min-width:64px}
+  .months-row{gap:10px;padding:0 8px 12px}
+  .month-card{min-width:220px}
+  .success-wrap{padding:20px 14px 120px}
+  .success-bg{max-width:180px}
+  .success-title{font-size:20px}
+  .success-desc{max-width:260px;font-size:14px}
+  .footer-inner{padding:10px}
+  .footer-button{padding:14px 12px;height:48px;font-size:15px}
+  .edit-amount-input{font-size:18px}
+  .modal-card{max-width:340px;padding:12px}
+}
+
+@media (max-width: 360px) {
+  .balance{font-size:24px}
+  .card .value, .value{font-size:24px}
+  .month-card{min-width:200px}
+  .success-bg{max-width:150px}
+  .footer-button{padding:12px 10px;height:46px;font-size:14px}
+}
+
+/* months horizontal swiper */
+.months-row{display:flex;gap:14px;overflow-x:auto;padding:0 12px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.month-card{min-width:280px;flex:0 0 auto;scroll-snap-align:center;background:transparent}
+.month-card .month-title{margin-bottom:12px}
+.month-card .tx-item{margin-bottom:12px}
+
+/* hide default scrollbar while preserving scroll functionality */
+.months-row::-webkit-scrollbar{height:8px}
+.months-row::-webkit-scrollbar-track{background:transparent}
+.months-row::-webkit-scrollbar-thumb{background:rgba(15,23,42,0.08);border-radius:999px}
+.months-row{scrollbar-width:thin;scrollbar-color:rgba(15,23,42,0.08) transparent}
+
+/* indicators below the months row */
+.months-indicators{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.month-dot{width:8px;height:8px;border-radius:999px;background:rgba(6,15,25,0.08);border:0;cursor:pointer;padding:0}
+.month-dot.active{background:var(--primary);box-shadow:0 6px 16px rgba(51,202,255,0.18);transform:scale(1.08)}
+.month-dot:focus{outline:2px solid rgba(51,202,255,0.12);outline-offset:3px}
+
+/* container for months row (no lateral arrow UI) */
+.months-row-container{position:relative}
+
+/* primary button arrow micro-interaction */
+.primary{gap:8px}
+.btn-arrow{margin-left:6px;transition:transform 180ms ease}
+.primary:hover .btn-arrow{transform:translateX(4px)}
+
+/* Spinner for loading state */
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(0,0,0,0.08);border-top-color:#063241;border-radius:50%;animation:spin 800ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Slightly larger footer button pop when enabled */
+.footer-button{transition:transform 180ms cubic-bezier(.2,.9,.2,1),box-shadow 180ms}
+.footer-button:enabled:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(4,57,96,0.12)}
+
+/* spinner variant for buttons with dark/light backgrounds */
+.footer-button .spinner{border:3px solid rgba(255,255,255,0.4);border-top-color:#ffffff}
+
+/* Modal action buttons */
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+.modal-actions .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+.modal-actions .btn.secondary{background:#f1f5f9}
+.modal-actions .btn.primary{background:var(--primary);color:#fff}

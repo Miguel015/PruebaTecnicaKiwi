@@ -1,0 +1,146 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kiwi Rewards API",
+    "version": "0.1.0",
+    "description": "API para la demo de recompensas y retiros (Kiwi). Endpoints simulados en memoria."
+  },
+  "servers": [{ "url": "http://localhost:3333", "description": "Local dev server" }],
+  "paths": {
+    "/rewards": {
+      "get": {
+        "summary": "Obtener balance y historial",
+        "responses": {
+          "200": {
+            "description": "Balance y historial del usuario",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RewardsResponse" },
+                "examples": {
+                  "example-1": {
+                    "value": { "balanceCents": 123450, "currency": "USD", "history": [] }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdrawal-methods": {
+      "get": {
+        "summary": "Listar métodos de retiro disponibles",
+        "responses": {
+          "200": {
+            "description": "Lista de métodos",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Method" } },
+                "examples": { "value": { "value": [] } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "summary": "Listar cuentas del usuario (opcional filtro por methodId)",
+        "parameters": [{ "name": "methodId", "in": "query", "schema": { "type": "string" }, "required": false }],
+        "responses": {
+          "200": {
+            "description": "Lista de cuentas",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Account" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/withdrawals": {
+      "post": {
+        "summary": "Crear un retiro",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateWithdrawal" },
+              "examples": {
+                "example-1": { "value": { "accountId": "acc-1", "amountCents": 5000 } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Withdrawal created", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Withdrawal" } } } },
+          "400": { "description": "Bad request", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "409": { "description": "Insufficient funds", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/topup": {
+      "post": {
+        "summary": "Recargar saldo (simulado)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Topup" } } }
+        },
+        "responses": {
+          "201": { "description": "Topup processed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "400": { "description": "Bad request", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/withdrawals/{id}": {
+      "get": {
+        "summary": "Obtener estado de un retiro",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Withdrawal", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Withdrawal" } } } },
+          "404": { "description": "Not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RewardsResponse": {
+        "type": "object",
+        "properties": {
+          "balanceCents": { "type": "integer" },
+          "currency": { "type": "string" },
+          "history": { "type": "array", "items": { "$ref": "#/components/schemas/HistoryEntry" } }
+        }
+      },
+      "Method": {
+        "type": "object",
+        "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "type": { "type": "string" } }
+      },
+      "Account": {
+        "type": "object",
+        "properties": { "id": { "type": "string" }, "userId": { "type": "string" }, "methodId": { "type": "string" }, "label": { "type": "string" } }
+      },
+      "HistoryEntry": {
+        "type": "object",
+        "properties": { "id": { "type": "string" }, "type": { "type": "string" }, "amountCents": { "type": "integer" }, "date": { "type": "string", "format": "date-time" }, "description": { "type": "string" } }
+      },
+      "CreateWithdrawal": {
+        "type": "object",
+        "properties": { "userId": { "type": "string" }, "accountId": { "type": "string" }, "amountCents": { "type": "integer" } },
+        "required": ["accountId", "amountCents" ]
+      },
+      "Topup": {
+        "type": "object",
+        "properties": { "userId": { "type": "string" }, "amountCents": { "type": "integer" }, "description": { "type": "string" } },
+        "required": [ "amountCents" ]
+      },
+      "Withdrawal": {
+        "type": "object",
+        "properties": { "id": { "type": "string" }, "userId": { "type": "string" }, "accountId": { "type": "string" }, "amountCents": { "type": "integer" }, "status": { "type": "string" }, "createdAt": { "type": "string", "format": "date-time" } }
+      },
+      "Error": { "type": "object", "properties": { "error": { "type": "string" }, "details": { "type": "array", "items": { "type": "object" } } } }
+    }
+  }
+}

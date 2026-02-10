@@ -1,0 +1,9 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Kiwi Recompensas (backup)",
+    "version": "0.1.0",
+    "description": "Backup copy of openapi.json (original file produced parse errors)."
+  },
+  "paths": {}
+}
