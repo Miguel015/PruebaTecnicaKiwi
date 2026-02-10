@@ -1,4 +1,4 @@
-# kiwi-challenge — README (Español)
+# kiwi-challenge — README 
 
 **Estado:** Demo lista para presentación. Frontend (Vite + React) y Backend (Express) ejecutables localmente; incluye pruebas unitarias y E2E.
 
