@@ -1,165 +1,127 @@
-# kiwi-challenge — README 
+# Kiwi — Prueba técnica: Rewards → Withdraw
 
-**Estado:** Demo lista para presentación. Frontend (Vite + React) y Backend (Express) ejecutables localmente; incluye pruebas unitarias y E2E.
+1) Descripción
+----------------
+Este repositorio implementa, en formato de demo técnica, el flujo "Rewards → Withdraw → Success" definido en el Figma de la prueba. Su objetivo es demostrar criterio técnico, decisiones justificadas y cobertura de pruebas; no es una solución productiva.
 
-Este README explica cómo instalar, ejecutar el proyecto, ejecutar las pruebas automatizadas, restaurar los datos de demostración y preparar el repositorio para entrega.
+Qué problema resuelve
+- Simula el flujo por el cual un usuario consulta su saldo de rewards, selecciona un método y una cuenta para retirar fondos, confirma la operación y obtiene una pantalla de éxito.
 
-**Rutas principales:**
-- Servidor: [server](server)
-- Cliente: [client](client)
+Qué NO intenta resolver
+- Integración con pasarelas de pago reales, persistencia en base de datos en producción, ni control de acceso completo.
 
-**Resumen rápido de lo añadido**
-- Especificación OpenAPI 3.0: `server/openapi.json` (disponible en `/docs`).
-- Validación de solicitudes con JSON Schema (AJV) en `server/index.js`.
-- Endpoint `POST /reset` para restaurar los datos en memoria a los valores por defecto (`server/data.default.js`).
-- Utilidades centralizadas para dinero y tests unitarios en `client/src/utils/amount.*`.
-- Pruebas E2E con Playwright (flujo seed y flujo UI) en `client/tests/e2e/`.
-- Estilos responsivos y ajustes visuales en `client/src/styles.css`.
-- Documento auxiliar `PREPARE_GIT.md` con pasos para preparar commit/push y crear un ZIP de entrega.
+2) Alcance
+----------------
+- Pantallas implementadas: Balance/Historial (Rewards), Select Method, Select Account, Withdraw Confirm, Withdraw Success.
+- La interfaz y el comportamiento se han alineado con el diseño de Figma dentro de las limitaciones de la demo (sin integración externa).
 
-**Prerequisitos**
-- Node.js (v16+) y npm instalados.
-- Recomendado en Windows: PowerShell (los comandos de ejemplo usan PowerShell).
+3) Stack técnico
+----------------
+- Frontend: React + Vite, JavaScript, CSS
+- Backend: Node.js + Express (datos en memoria)
+- API: OpenAPI 3.0 (Swagger UI disponible en `/docs`)
+- Pruebas: Vitest (unit), Playwright (E2E)
+- Herramientas: Spec‑Kit (workflow de especificación), Copilot como asistente de productividad
 
-## Instalación (una sola vez)
-1. Instalar dependencias del servidor:
+4) Decisiones técnicas (resumen)
+----------------
+- Enfoque minimalista y reproducible: datos en memoria para mantener determinismo en pruebas y foco en el flujo.
+- Montos representados en centavos (`amountCents`) y procesados por utilidades centralizadas (`client/src/utils/amount.js`) para evitar errores de precisión.
+- Validación server‑side mediante JSON Schema para mantener contratos estables entre cliente y API.
+- Pruebas: unitarias para utilidades críticas y E2E para validar la experiencia completa.
+- No se sobreingenierizó: no se añadieron bases de datos, colas o integraciones innecesarias que no aportan al objetivo de la prueba.
 
+5) Uso de Spec‑Kit
+----------------
+- Analyze: recopilación de ambigüedades y definición de criterios de aceptación.
+- Plan/Constitution: establecimiento de límites de alcance (sin integraciones externas).
+- Specify/Tasks: descomposición del trabajo en tareas pequeñas y priorizadas (API, utilidades, pruebas, UI).
+
+6) Cómo ejecutar (comandos exactos)
+----------------
+Prerequisitos: Node.js v16+ y npm
+
+Instalación:
 ```powershell
+# servidor
 cd server
+npm install
+
+# cliente
+cd ../client
 npm install
 ```
 
-2. Instalar dependencias del cliente:
-
+Instalar navegadores para Playwright (si ejecutarás E2E):
 ```powershell
-cd ../client
-npm install
-# Si vas a ejecutar las pruebas E2E y no tienes navegadores instalados:
 npx playwright install --with-deps
 ```
 
-## Ejecutar localmente (desarrollo)
-
-1) Iniciar el servidor (puerto 3333):
-
+Ejecución en desarrollo:
 ```powershell
+# iniciar API (puerto 3333)
 cd server
 npm start
-```
 
-2) Iniciar el servidor de desarrollo del cliente (Vite). Si el puerto `5173` está en uso, Vite elegirá el siguiente (por ejemplo `5174`):
-
-```powershell
+# en otra terminal: iniciar cliente (Vite)
 cd client
 npm run dev
 ```
 
-3) Abrir la aplicación en el navegador (ejemplos):
+URLs relevantes:
+- Aplicación: http://localhost:5173/ (Vite)
+- Swagger UI (API docs): http://localhost:3333/docs
 
-- Frontend: http://localhost:5173/ (si Vite eligió otro puerto, usar ese puerto)
-- Swagger UI (documentación API): http://localhost:3333/docs
-
-Consejo: si Vite elige un puerto distinto, actualiza `client/playwright.config.js` `baseURL` para que las pruebas E2E apunten al puerto correcto.
-
-## Restaurar datos de demostración
-
-Para borrar las transacciones en memoria y restaurar el historial mensual incluido en los datos por defecto, llama al endpoint `/reset`:
-
+Restaurar datos de demostración:
 ```powershell
-# desde cualquier terminal
 Invoke-RestMethod -Method Post -Uri http://localhost:3333/reset
-# o con curl
+# o
 curl -X POST http://localhost:3333/reset
 ```
 
-Después, puedes comprobar el endpoint de rewards:
-
+Pruebas:
 ```powershell
-curl http://localhost:3333/rewards
-```
-
-## Pruebas
-
-Pruebas unitarias (Vitest):
-
-```powershell
+# unit tests
 cd client
 npm run test
-```
 
-Pruebas E2E (Playwright): asegúrate de que el servidor y el cliente estén ejecutándose, luego:
-
-```powershell
+# e2e (server + client corriendo)
 cd client
 npm run test:e2e
-```
 
-Ejecutar ambas secuencias (unit + e2e):
-
-```powershell
+# ambos
 cd client
 npm run test:all
 ```
 
-Notas:
-- Hay dos pruebas E2E: una usa `localStorage` para preparar estado (seeded) y otra realiza todo el flujo mediante interacciones UI (sin seed).
-- Si Playwright informa un puerto distinto para Vite, actualiza `client/playwright.config.js` `baseURL`.
+7) Backend / API
+----------------
+Endpoints implementados (resumen):
+- `GET /rewards` — devuelve `{ balanceCents, currency, history }`
+- `GET /accounts` — lista de cuentas vinculadas
+- `GET /withdrawal-methods` — métodos disponibles
+- `POST /withdrawals` — crea un retiro (request body validado)
+- `GET /withdrawals/:id` — recuperar retiro por id
+- `POST /reset` — restaura `server/data.default.js` en memoria (solo demo)
 
-## Scripts útiles
+Swagger UI disponible en `/docs` cuando el servidor esté en ejecución.
 
-- `cd server && npm start` — inicia el backend en el puerto 3333
-- `cd client && npm run dev` — inicia el frontend (Vite)
-- `cd client && npm run test` — ejecuta las pruebas unitarias (Vitest)
-- `cd client && npm run test:e2e` — ejecuta las pruebas E2E (Playwright)
-- `cd client && npm run test:all` — ejecuta unit + e2e
+8) Supuestos y limitaciones
+----------------
+- Datos en memoria para facilitar pruebas deterministas.
+- No hay autenticación/autorization en las rutas (fuera de alcance para la prueba).
+- No se integró con servicios externos (bancos, pasarelas de pago).
 
-## Archivos importantes añadidos / cambiados
+9) Posibles mejoras (priorizadas)
+----------------
+- Añadir persistencia (Postgres/SQLite) y migraciones.
+- Añadir autenticación y permisos para rutas sensibles.
+- Configurar CI (GitHub Actions) que ejecute lint, unit tests y Playwright E2E.
+- Añadir pruebas visuales (snapshots) para detectar regresiones de UI.
+- Dockerizar la aplicación para reproducibilidad en CI y local.
 
-- `server/openapi.json` — especificación OpenAPI 3.0 (esquemas y ejemplos)
-- `server/data.default.js` — datos por defecto usados por `POST /reset`
-- `server/index.js` — añadido `POST /reset` y validación con AJV
-- `client/src/utils/amount.js` (+ pruebas) — utilidades para manejo/formateo de dinero
-- `client/tests/e2e/*` — pruebas Playwright (seeded y UI-driven)
-- `client/src/styles.css` — ajustes responsivos y visuales
-- `INTERVIEW.md` — resumen del trabajo y puntos para presentar
-- `PREPARE_GIT.md` — pasos para preparar commits y exportar ZIP de entrega
+Contribución y mantenimiento
+----------------
+- Mantener la lógica del negocio separada de la UI y cubrir utilidades críticas con unit tests.
+- Usar ramas `feature/*` y PRs para cambios; los PRs deben incluir pasos para reproducir localmente y pruebas que cubran lo modificado.
 
-## Resolución de problemas (rápido)
-
-- Puerto en uso (servidor 3333 o Vite 5173): detener procesos node y volver a iniciar.
-
-```powershell
-# listar procesos node
-tasklist /FI "IMAGENAME eq node.exe" /FO TABLE
-# terminar proceso por PID
-taskkill /PID <pid> /F
-```
-
-- Si Playwright no puede conectarse, confirma el puerto que Vite imprimió en la terminal y actualiza `client/playwright.config.js` `baseURL`.
-
-## Entrega / Commits
-
-Pasos rápidos para revisar, commitear y subir:
-
-```powershell
-# revisar cambios
-git status
-# seleccionar cambios
-git add -p
-# commit
-git commit -m "chore: pulido UI, añadir E2E, OpenAPI y endpoint reset"
-# push
-git push origin <branch>
-```
-
-He creado la rama `deliver/kiwi-challenge` y empujé los cambios a `main` en el remoto indicado. Si quieres, abro un Pull Request desde `deliver/kiwi-challenge` hacia `main`.
-
-## Recomendaciones siguientes
-
-- Añadir pipeline CI que ejecute `npm run test` y `npx playwright test` en cada push.
-- Añadir snapshots visuales en Playwright para detectar regresiones visuales.
-- Opcional: usar la tipografía exacta del Figma (SF Pro) si tienes la licencia.
-
----
-
-¿Quieres que abra un Pull Request desde `deliver/kiwi-challenge` hacia `main` ahora? 
